@@ -109,13 +109,15 @@ class WandbLogger(Logger):
             name: str,
             save_dir: pathlib.Path,
             id: Optional[str] = None,
-            project: Optional[str] = None
+            project: Optional[str] = None,
+            entity: Optional[str] = None,
     ):
         super().__init__()
         if not dist.is_initialized() or dist.get_rank() == 0:
             save_dir.mkdir(parents=True, exist_ok=True)
             self.experiment = wandb.init(name=name,
                                          project=project,
+                                         entity=entity,
                                          id=id,
                                          dir=str(save_dir),
                                          resume='allow',

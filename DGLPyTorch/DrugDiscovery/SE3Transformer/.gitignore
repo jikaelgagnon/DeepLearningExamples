@@ -119,3 +119,6 @@ venv.bak/
 **/results
 *.pkl
 *.log
+
+# singularity
+*.sif

@@ -204,7 +204,7 @@ if __name__ == '__main__':
 
     loggers = [DLLogger(save_dir=args.log_dir, filename=args.dllogger_name)]
     if args.wandb:
-        loggers.append(WandbLogger(name=f'QM9({args.task})', save_dir=args.log_dir, project='se3-transformer'))
+        loggers.append(WandbLogger(name=f'QM9({args.task})', save_dir=args.log_dir, project='hamiltonian', entity='symmetry_group'))
     logger = LoggerCollection(loggers)
 
     datamodule = QM9DataModule(**vars(args))
