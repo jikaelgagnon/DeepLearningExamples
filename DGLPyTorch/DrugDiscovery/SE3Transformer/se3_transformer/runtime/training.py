@@ -29,7 +29,8 @@ import numpy as np
 import torch
 import torch.distributed as dist
 import torch.nn as nn
-from apex.optimizers import FusedAdam, FusedLAMB
+from torch.optim import Adam
+#from apex.optimizers import FusedAdam, FusedLAMB
 from torch.nn.modules.loss import _Loss
 from torch.nn.parallel import DistributedDataParallel
 from torch.optim import Optimizer
@@ -129,10 +130,7 @@ def train(model: nn.Module,
     model.train()
     grad_scaler = torch.cuda.amp.GradScaler(enabled=args.amp)
     if args.optimizer == 'adam':
-        optimizer = FusedAdam(model.parameters(), lr=args.learning_rate, betas=(args.momentum, 0.999),
-                              weight_decay=args.weight_decay)
-    elif args.optimizer == 'lamb':
-        optimizer = FusedLAMB(model.parameters(), lr=args.learning_rate, betas=(args.momentum, 0.999),
+        optimizer = Adam(model.parameters(), lr=args.learning_rate, betas=(args.momentum, 0.999),
                               weight_decay=args.weight_decay)
     else:
         optimizer = torch.optim.SGD(model.parameters(), lr=args.learning_rate, momentum=args.momentum,
